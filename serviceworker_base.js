@@ -1,9 +1,10 @@
-var CACHE_NAME = '@@CACHENAME@@';
+var CACHE_NAME = '{@@CACHENAME@@}';
 var urlsToCache = [
     '/',
     '/index.html',
     '/css/skyblue.min.css',
     '/images/icons/icon.png',
+    '/images/icons/icon144.png',
     '/favicon.ico',
     '/fonts/pe-icon/Pe-icon-7-stroke.eot',
     '/fonts/pe-icon/Pe-icon-7-stroke.svg',
