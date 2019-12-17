@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoomLight</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="stylesheet" href="css/skyblue.min.css">
+    <link rel="manifest" href="./manifest.json">
+</head>
+
+<body>
+<header class="header">
+    <h1 class="title">EbiRoomLight</h1>
+</header>
+
+<div class="content">
+    <form name="remoteCol">
+        <h2>送信先</h2>
+        <label class="fancy-radio">
+            <input type="radio" name="send" value="3" checked>
+            <span>Both</span>
+        </label>
+        <label class="fancy-radio">
+            <input type="radio" name="send" value="1">
+            <span>Dining</span>
+        </label>
+        <label class="fancy-radio">
+            <input type="radio" name="send" value="2">
+            <span>Room</span>
+        </label>
+        <h2>あかりセレクト</h2>
+        <a class="btn btn-success btn-empty" data-signal="fluorescent"><span class="icon-lintern"></span>蛍光灯</a>
+        <a class="btn btn-success btn-empty" data-signal="read"><span class="icon-news-paper"></span>読み書き</a>
+        <a class="btn btn-success btn-empty" data-signal="table"><span class="icon-home"></span>だんらん</a>
+        <a class="btn btn-success btn-empty" data-signal="bulb"><span class="icon-light"></span>電球</a>
+        <h2>操作</h2>
+        <a class="btn btn-success btn-empty" data-signal="on"><span class="icon-gleam"></span>節電2</a>
+        <a class="btn btn-dark" data-signal="30"><span class="icon-clock"></span>30min</a>
+        <a class="btn btn-dark" data-signal="60"><span class="icon-clock"></span>60min</a>
+        <a class="btn btn-success btn-empty" data-signal="security"><span class="icon-moon">保安灯</a>
+        <a class="btn btn-dark" data-signal="off"><span class="icon-power"></span>消灯</a>
+        <div class="success">
+            <label>Result</label>
+            <textarea class="form-control" type="text" name="result"></textarea>
+        </div>
+</div>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./serviceworker.js').then(function (registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }).catch(function (err) {
+            console.log('ServiceWorker registration failed: ', err);
+        });
+    }
+
+    document.addEventListener('click', function (event) {
+        var signal = event.target.getAttribute("data-signal");
+        if (signal) {
+            var send = document.forms.remoteCol.send.value;
+            fetch("{@@WEBHOOKURL@@}", {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify({
+                    "send": send,
+                    "signal": signal
+                })
+            }).then(function (response) {
+                if(response.ok){
+                    document.forms.remoteCol.result.value += (new Date()).toLocaleTimeString() + ": " + send + "-" + signal + "\n";
+                    return;
+                }
+                document.forms.remoteCol.result.value += (new Date()).toLocaleTimeString() + ": Error - " + response.statusText;
+            });
+        }
+        console.log(event.type + ' got fired', event, signal)
+    })
+</script>
+</body>
+
+</html>
