@@ -61,19 +61,21 @@
             fetch("{@@WEBHOOKURL@@}", {
                 method: 'POST',
                 mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
                     "send": send,
                     "signal": signal
                 })
             }).then(function (response) {
-                if(response.ok){
+                if (response.ok) {
                     document.forms.remoteCol.result.value += (new Date()).toLocaleTimeString() + ": " + send + "-" + signal + "\n";
                     return;
                 }
                 document.forms.remoteCol.result.value += (new Date()).toLocaleTimeString() + ": Error - " + response.statusText;
             });
         }
-        console.log(event.type + ' got fired', event, signal)
     })
 </script>
 </body>
