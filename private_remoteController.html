@@ -54,10 +54,10 @@
       });
     }
     let module = obniz.wired('IRModule', { vcc: 0, send: 1, recv: 2, gnd: 3 });
-    signals.forEach(async function (signal) {
+    for(let signal of signals) {
       module.send(signalData[signal]);
       await obniz.wait(500);
-    });
+    }
   }
 </script>
 </body>
