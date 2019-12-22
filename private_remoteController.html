@@ -41,9 +41,9 @@
       done();
     }
   };
-  function async command(send, signal, signalData) {
-    var cmds = commands[signal];
-    var signals;
+  async function command(send, signal, signalData) {
+    let cmds = commands[signal];
+    let signals;
     if(!cmds){
       return;
     } else if(typeof cmd === "string"){
@@ -53,8 +53,8 @@
         return send + cmd;
       });
     }
-    var module = obniz.wired('IRModule', { vcc: 0, send: 1, recv: 2, gnd: 3 });
-    signals.forEach(function (signal) {
+    let module = obniz.wired('IRModule', { vcc: 0, send: 1, recv: 2, gnd: 3 });
+    signals.forEach(async function (signal) {
       module.send(signalData[signal]);
       await obniz.wait(500);
     });
