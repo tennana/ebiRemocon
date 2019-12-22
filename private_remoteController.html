@@ -46,7 +46,7 @@
     let signals;
     if(!cmds){
       return;
-    } else if(typeof cmd === "string"){
+    } else if(typeof cmds === "string"){
       signals = [send + cmds];
     } else {
       signals = cmds.map(function (cmd){
