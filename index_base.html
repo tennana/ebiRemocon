@@ -55,7 +55,7 @@
     }
 
     document.addEventListener('click', function (event) {
-        var signal = event.target.getAttribute("data-signal");
+        var signal = event.target.getAttribute("data-signal") || event.target.parentNode.getAttribute("data-signal");
         if (signal) {
             var send = document.forms.remoteCol.send.value;
             fetch("{@@WEBHOOKURL@@}", {
