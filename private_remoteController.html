@@ -28,7 +28,7 @@
     let signalData = await storagePromise;
     let request = {};
     if (typeof req === "object") {
-      request = req;
+      request = req.body;
     }
     let send = Number(request.send);
     if(send & 1){
