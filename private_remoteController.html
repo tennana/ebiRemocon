@@ -1,0 +1,66 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://obniz.io/js/jquery-3.2.1.min.js"></script>
+  <script src="https://unpkg.com/obniz@3.0.1/obniz.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<script>
+  var commands = {
+      "fluorescent": "蛍光灯",
+      "read": "図書館",
+      "table": "だんらん",
+      "bulb": "電球",
+      "on": "節電2",
+      "off": "消灯",
+      "30": "おやすみ30",
+      "60": "おやすみ60",
+      "security": "保安灯",
+      "security60": ["保安灯","おやすみ60"]    
+  }
+  var obniz = new Obniz("OBNIZ_ID_HERE");
+  var storagePromise = fetch("/users/me/repo/storage.json").then(function (response) {
+    return response.json();
+  });
+  obniz.onconnect = async function () {
+    let signalData = await storagePromise;
+    let request = {};
+    if (typeof req === "object") {
+      request = req;
+    }
+    let send = Number(request.send);
+    if(send & 1){
+      await command("D", request.signal, signalData);
+    }
+    if(send & 2){
+      await command("R", request.signal, signalData);
+    }
+    if(typeof done === "function") {
+      done();
+    }
+  };
+  function async command(send, signal, signalData) {
+    var cmds = commands[signal];
+    var signals;
+    if(!cmds){
+      return;
+    } else if(typeof cmd === "string"){
+      signals = [send + cmds];
+    } else {
+      signals = cmds.map(function (cmd){
+        return send + cmd;
+      });
+    }
+    var module = obniz.wired('IRModule', { vcc: 0, send: 1, recv: 2, gnd: 3 });
+    signals.forEach(function (signal) {
+      module.send(signalData[signal]);
+      await obniz.wait(500);
+    });
+  }
+</script>
+</body>
+</html>
+
+
