@@ -32,16 +32,16 @@
     }
     let send = Number(request.send);
     if(send & 1){
-      await command("D", request.signal, signalData);
+      await command("D", module, request.signal, signalData);
     }
     if(send & 2){
-      await command("R", request.signal, signalData);
+      await command("R", module, request.signal, signalData);
     }
     if(typeof done === "function") {
       done();
     }
   };
-  async function command(send, signal, signalData) {
+  async function command(send, module, signal, signalData) {
     let cmds = commands[signal];
     let signals;
     if(!cmds){
