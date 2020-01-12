@@ -25,6 +25,8 @@
     return response.json();
   });
   obniz.onconnect = async function () {
+//    let module = obniz.wired('IRModule', { vcc: 0, send: 1, recv: 2, gnd: 3 });
+    let module = obniz.wired("InfraredLED", {anode:4 , cathode:5 });
     let signalData = await storagePromise;
     let request = {};
     if (typeof req === "object") {
