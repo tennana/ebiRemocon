@@ -1,0 +1,25 @@
+{
+  "name": "ebiremocon-server",
+  "version": "0.0.1",
+  "description": "WIP",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tennana/ebiRemocon.git"
+  },
+  "keywords": [
+    "obniz"
+  ],
+  "author": "Tennana",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/tennana/ebiRemocon/issues"
+  },
+  "homepage": "https://github.com/tennana/ebiRemocon#readme",
+  "dependencies": {
+    "obniz": "^3.2.0"
+  }
+}
